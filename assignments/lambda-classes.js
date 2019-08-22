@@ -16,8 +16,8 @@ class Instructor extends Person{
         this.favLanguage = attributes.favLanguage,
         this.catchPhrase = attributes.catchPhrase
     }
-    demo(){
-        return `Today we are learning about ${student.favSubjects[2]}.`
+    demo(subject){
+        return `Today we are learning about ${subject}.`
     }
     grade(){
         return `${student.name} receives a perfect score on ${student.favSubjects[0]}.`
@@ -25,7 +25,6 @@ class Instructor extends Person{
     test(){
         return student.calculate - Math.floor(Math.random()*20);
     }
-    // RECEIVES `subject` OBJECT AND `student` STRING 
 }
 
 class Student extends Person{
@@ -36,21 +35,23 @@ class Student extends Person{
         this.className = attributes.className,
         this.favSubjects = attributes.favSubjects //Array, so we use apply???
     }
-    listsSubjects(){
-        return `${this.name}'s favorite subjects are ${this.favSubjects[0]}, ${this.favSubjects[1]}, and ${this.favSubjects[2]}.` //will need to log each subject one by one -- REDO
+    listsSubjects(subject){
+        for(i = 0; i < subject.length; i++){
+            return `${this.name}'s favorite subject is ${this.subject[i]}.`
+        }
     }
-    PRAssignment(){
-        return `${this.name} has begun sprint challenge on ${this.favSubjects[1]}.`
+    PRAssignment(subject){
+        return `${this.name} has submitted a PR for ${subject}.`
+    }
+    sprintChallenge(subject){
+        return `${this.name} has begun sprint challenge on ${subject}.`
     }
     graduate(){
         if(instructor.test() > 70){
             return `Congratulations, ${this.name}! You've successfully graduated from Lambda School with a grade of ${this.calculate}%!`
-        }else{
-            return false
+        }
         }
     }
-    // RECEIVES `subject` OBJECT AND `student` STRING 
-}
 
 class ProjectManager extends Instructor{
     constructor(attributes){
@@ -58,14 +59,12 @@ class ProjectManager extends Instructor{
         this.gradClassName = attributes.gradClassName,
         this.favInstructor = attributes.favInstructor
     }
-    standUp(){
-        return `${this.name} announces to ${student.className}, @channel standy times!`
+    standUp(channel){
+        return `${this.name} announces to ${channel}, @channel standy times!`
     }
-    debugsCode(){
-        return `${this.name} debugs ${student.name}'s code on ${student.favSubjects[1]}`
+    debugsCode(student, subject){
+        return `${this.name} debugs ${student.name}'s code on ${subject}`
     }
-
-    // RECEIVES `slack channel`, `student`, and `subject`
 }
 
 const instructor = new Instructor({
@@ -98,15 +97,16 @@ const pm = new ProjectManager({
 
 
 console.log(instructor.speak()); 
-console.log(instructor.demo());
+console.log(instructor.demo(student.favSubjects[2]));
 console.log(instructor.grade());
 console.log(instructor.test());
 
 console.log(student.speak()); 
-console.log(student.listsSubjects());
-console.log(student.PRAssignment());
+console.log(student.listsSubjects(student.favSubjects));
+console.log(student.sprintChallenge(student.favSubjects[0]));
+console.log(student.PRAssignment(student.favSubjects[1]));
 console.log(student.graduate());
 
 console.log(pm.speak());  
-console.log(pm.standUp());
-console.log(pm.debugsCode());
+console.log(pm.standUp(student.className));
+console.log(pm.debugsCode(student, student.favSubjects[2]));
