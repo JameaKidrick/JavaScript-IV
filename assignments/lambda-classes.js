@@ -17,18 +17,21 @@ class Instructor extends Person{
         this.catchPhrase = attributes.catchPhrase
     }
     demo(){
-        return `Today we are learning about ${student2.favSubjects[2]}.`
+        return `Today we are learning about ${student.favSubjects[2]}.`
     }
     grade(){
-        return `${student1.name} receives a perfect score on ${student1.favSubjects[0]}.`
+        return `${student.name} receives a perfect score on ${student.favSubjects[0]}.`
     }
-
+    test(){
+        return student.calculate - Math.floor(Math.random()*20);
+    }
     // RECEIVES `subject` OBJECT AND `student` STRING 
 }
 
 class Student extends Person{
     constructor(attributes){
         super(attributes);
+        this.calculate = attributes.calculate,
         this.previousBackground = attributes.previousBackground,
         this.className = attributes.className,
         this.favSubjects = attributes.favSubjects //Array, so we use apply???
@@ -39,7 +42,13 @@ class Student extends Person{
     PRAssignment(){
         return `${this.name} has begun sprint challenge on ${this.favSubjects[1]}.`
     }
-
+    graduate(){
+        if(instructor.test() > 70){
+            return `Congratulations, ${this.name}! You've successfully graduated from Lambda School with a grade of ${this.calculate}%!`
+        }else{
+            return false
+        }
+    }
     // RECEIVES `subject` OBJECT AND `student` STRING 
 }
 
@@ -50,10 +59,10 @@ class ProjectManager extends Instructor{
         this.favInstructor = attributes.favInstructor
     }
     standUp(){
-        return `${this.name} announces to ${student2.className}, @channel standy times!`
+        return `${this.name} announces to ${student.className}, @channel standy times!`
     }
     debugsCode(){
-        return `${this.name} debugs ${student1.name}'s code on ${student1.favSubjects[2]}`
+        return `${this.name} debugs ${student.name}'s code on ${student.favSubjects[1]}`
     }
 
     // RECEIVES `slack channel`, `student`, and `subject`
@@ -68,22 +77,14 @@ const instructor = new Instructor({
     catchPhrase: 'Cowabunga'
 })
 
-const student1 = new Student({
-    name: 'Bob',
-    age: 23,
-    location: 'Massachusetts',
-    previousBackground: 'Geology',
-    className: 'WEB23',
-    favSubjects: ['flexbox', 'prototypes', 'callbacks']
-})
-
-const student2 = new Student({
+const student = new Student({
     name: 'Toni',
-    age: '20',
+    age: 20,
+    calculate: 100,
     location: 'California',
     previousBackground: 'Computer Science',
     className: 'WEB23',
-    favSubjects: ['this keyword', 'arrays', 'classes']
+    favSubjects: ['callbacks', 'arrays', 'classes']
 })
 
 const pm = new ProjectManager({
@@ -99,16 +100,12 @@ const pm = new ProjectManager({
 console.log(instructor.speak()); 
 console.log(instructor.demo());
 console.log(instructor.grade());
+console.log(instructor.test());
 
-console.log(student1.speak()); 
-console.log(student1.listsSubjects());
-console.log(student1.PRAssignment());
-
-
-console.log(student2.speak()); 
-console.log(student2.listsSubjects());
-console.log(student2.PRAssignment());
-
+console.log(student.speak()); 
+console.log(student.listsSubjects());
+console.log(student.PRAssignment());
+console.log(student.graduate());
 
 console.log(pm.speak());  
 console.log(pm.standUp());
