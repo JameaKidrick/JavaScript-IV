@@ -33,12 +33,13 @@ class Student extends Person{
         this.calculate = attributes.calculate,
         this.previousBackground = attributes.previousBackground,
         this.className = attributes.className,
-        this.favSubjects = attributes.favSubjects //Array, so we use apply???
+        this.favSubjects = attributes.favSubjects
     }
-    listsSubjects(subject){
-        for(i = 0; i < subject.length; i++){
-            return `${this.name}'s favorite subject is ${this.subject[i]}.`
+    listsSubjects(){
+        for( let i = 0; i < this.favSubjects.length; i++){
+            console.log(`${this.name}'s favorite subject is ${this.favSubjects[i]}.`)
         }
+        // return `${this.name}'s favorite subjects are ${this.favSubjects[0]}, ${this.favSubjects[1]}, and ${this.favSubjects[2]}.`
     }
     PRAssignment(subject){
         return `${this.name} has submitted a PR for ${subject}.`
@@ -50,8 +51,8 @@ class Student extends Person{
         if(instructor.test() > 70){
             return `Congratulations, ${this.name}! You've successfully graduated from Lambda School with a grade of ${this.calculate}%!`
         }
-        }
     }
+}
 
 class ProjectManager extends Instructor{
     constructor(attributes){
@@ -74,7 +75,7 @@ const instructor = new Instructor({
     specialty: 'redux',
     favLanguage: 'C#',
     catchPhrase: 'Cowabunga'
-})
+});
 
 const student = new Student({
     name: 'Toni',
@@ -84,7 +85,7 @@ const student = new Student({
     previousBackground: 'Computer Science',
     className: 'WEB23',
     favSubjects: ['callbacks', 'arrays', 'classes']
-})
+});
 
 const pm = new ProjectManager({
     name: 'Kyle',
@@ -92,7 +93,7 @@ const pm = new ProjectManager({
     location: 'Texas',
     gradClassName: 'WEB19',
     favInstructor: 'Maria'
-})
+});
 
 
 
@@ -102,7 +103,7 @@ console.log(instructor.grade());
 console.log(instructor.test());
 
 console.log(student.speak()); 
-console.log(student.listsSubjects(student.favSubjects));
+console.log(student.listsSubjects());
 console.log(student.sprintChallenge(student.favSubjects[0]));
 console.log(student.PRAssignment(student.favSubjects[1]));
 console.log(student.graduate());
